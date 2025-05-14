@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="index :: head">
+    <meta charset="UTF-8">
+</head>
+<body>
+<div class="container">
+    <div th:include="index :: menu"></div>
+    <br/>
+    <form>
+        <div class="mb-3">
+            <input hidden="true" name="id" th:value="${compra.id}" type="text">
+
+            <label class="form-label" for="fornecedor">Fornecedor</label>
+            <input class="form-control" id="fornecedor" name="fornecedor" th:value="${compra.fornecedor}" type="text">
+        </div>
+
+        <br/>
+        <div class="mb-3">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Descrição</th>
+                    <th>Valor</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><input class="form-control" disabled="true" name="id" type="text"></td>
+                    <td><input class="form-control" name="descricao" type="text"></td>
+                    <td><input class="form-control" name="valor" type="text"></td>
+                    <td>
+                        <button class="btn btn-dark" formmethod="post" th:formaction="@{/compra}"
+                                type="submit">Inserir
+                        </button>
+                    </td>
+                </tr>
+                <tr th:each="item, stat : ${compra.itens}">
+                    <td><input th:value="${item.id}" class="form-control" th:name="|itens[${stat.index}].id|" type="text"></td>
+
+                    <td><input th:value="${item.descricao}" class="form-control"
+                               th:name="|itens[${stat.index}].descricao|" type="text"></td>
+
+                    <td><input th:value="${item.valor}" class="form-control" th:name="|itens[${stat.index}].valor|"
+                               type="text"></td>
+                    <td>
+                        <button class="btn btn-dark">Remover</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button class="btn btn-dark" formmethod="post" th:formaction="@{/compra/salvar}" type="submit">Salvar</button>
+    </form>
+</div>
+</body>
+</html>
